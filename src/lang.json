@@ -1,0 +1,16 @@
+{
+    "es":{
+        "button":{
+            "newCard": "Nueva carta",
+            "shuffle": "Mezclar"
+        },
+        "shuffleAgain": "Vuelve a mezclar"
+    },
+    "en":{
+        "button":{
+            "newCard": "New card",
+            "shuffle": "Shuffle"
+        },
+        "shuffleAgain": "Shuffle again"
+    }
+}

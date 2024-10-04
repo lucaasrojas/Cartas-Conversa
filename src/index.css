@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #a0b4e4;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,66 +21,4 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-button {
-  border-radius: 8px;
-  border: 1.5px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.card-container {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  border-radius: 10px;
-}
-.card,
-.front,
-.back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-container > .card > .front {
-  backface-visibility: hidden;
-  background: #ffc728;
-  color: #333;
-}
-
-.card > .front > div,
-.card > .back > div {
-  padding: 10px;
-}
-
-.card-container > .card > .back {
-  backface-visibility: hidden;
-  background: #fafafa;
-  color: #333;
-  transform: rotateY(180deg);
-}
-
-.card {
-  transform-style: preserve-3d;
-  transition: all 0.5s ease;
 }

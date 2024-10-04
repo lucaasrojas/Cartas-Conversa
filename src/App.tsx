@@ -1,100 +1,81 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Card from "./components/Card/Card";
+import { Card as CardType } from "./typing";
+import { defaultCardsList } from "./const";
+import { getRandomNum } from "./utils";
+import Button from "./components/Button/Button";
+import useTranslate from "./hooks/useTranslate";
 
-interface Card {
-  id: number;
-  text: string;
+interface CurrentCard {
+  id: number
+  text: string
+  isFrontSide: boolean,
 }
 
 function App() {
-  const cardList: Card[] = [
-    {
-      id: 1,
-      text: "¿Cuál crees que es el mayor desafío al que se enfrenta nuestra sociedad actualmente y por qué?",
-    },
-    {
-      id: 2,
-      text: "¿Cuál es tu opinión sobre la educación tradicional versus la educación en línea? ¿Cuáles son las ventajas y desventajas de cada una?",
-    },
-    {
-      id: 3,
-      text: "¿Estás a favor o en contra de los avances tecnológicos como la inteligencia artificial y la automatización? ¿Por qué?",
-    },
-    {
-      id: 4,
-      text: "¿Cuál es tu postura sobre los derechos de los animales? ¿Crees que deberían tener los mismos derechos que los seres humanos?",
-    },
-    {
-      id: 5,
-      text: "¿Cuál es tu opinión sobre la legalización de las drogas? ¿Crees que tendría más beneficios o más consecuencias negativas?",
-    },
-  ];
+  const [cards, setCards] = useState<CardType[]>([]);
+  const [currentCard, setCurrentCard] = useState<CurrentCard | undefined>();
 
-  const [cards, setCards] = useState<Card[]>([]);
+  const {translate} = useTranslate()
+
+  const shuffleCards = () => {
+    setCards(defaultCardsList);
+  };
+
+  const handleOnClickShuffle = () => {
+    shuffleCards();
+    getNewCard(defaultCardsList);
+  }
 
   useEffect(() => {
-    setCards(cardList);
-    getNewCard();
+    shuffleCards();
+    getNewCard(defaultCardsList);
   }, []);
-  const getNewCard = () => {
-    const selected: number = getRandomNum(0, cards.length - 1);
 
-    const card = document.querySelector(".card");
-    if (card.style.transform.includes("180")) {
-      const frontCard = document.querySelector(".front-card-text");
-      frontCard.innerHTML = cards[selected].text;
-      card.style.transform = "rotateY(0deg)";
-    } else {
-      const backCard = document.querySelector(".back-card-text");
-      backCard.innerHTML = cards[selected].text;
-      card.style.transform = "rotateY(180deg)";
-    }
+  const getNewCard = (cardsList: CardType[]) => {
+    const selectedIndex = getRandomNum(0, cardsList.length - 1);
+    const selectedCard: CardType = cardsList[selectedIndex];
 
-    const newCards = [...cards];
-    newCards.splice(selected, 1);
+    setCurrentCard({
+      text: selectedCard?.text,
+      id: selectedCard?.id,
+      isFrontSide: !currentCard?.isFrontSide,
+    });
+
+    const newCards = [...cardsList];
+    newCards.splice(selectedIndex, 1);
     setCards(newCards);
   };
-  function getRandomNum(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
 
   return (
     <div
       className="App"
       style={{ display: "flex", flexDirection: "column", gap: 20 }}
     >
-      <div style={{ display: "flex", gap: 10 }}>
-        {cards.length > 0 && (
-          <button disabled={!cards.length} onClick={() => getNewCard()}>
-            Nueva carta
-          </button>
-        )}
+      <div style={{ display: "grid", gap: 10 }}>
 
-        <button
-          onClick={() => {
-            setCards(cardList);
-            getNewCard();
-          }}
-        >
-          Mezclar
-        </button>
+        <Button
+          text={translate('button.newCard')}
+          disabled={!currentCard?.text}
+          onClick={() => getNewCard(cards)}
+        />
+
+        <Button
+          text={translate('button.shuffle')}
+          onClick={() => handleOnClickShuffle()}
+        />
+
       </div>
-      {cards.length > 0 && (
-        <div className="card-container">
-          <div className="card">
-            <div className="front">
-              <div>
-                <span className="front-card-text"></span>{" "}
-              </div>
-            </div>
-            <div className="back">
-              <div>
-                <span className="back-card-text"></span>{" "}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {
+        currentCard && (
+          <Card
+            isFrontSide={currentCard?.isFrontSide}
+            text={currentCard.text ? currentCard.text : translate('shuffleAgain')}
+          />
+        )
+      }
+
     </div>
   );
 }

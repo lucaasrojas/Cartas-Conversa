@@ -1,0 +1,30 @@
+.front,
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.front {
+    backface-visibility: hidden;
+    background: #e4d0a0;
+    color: #333;
+}
+
+.front>div,
+.back>div {
+    padding: 10px;
+}
+
+.back {
+    backface-visibility: hidden;
+    background: #fafafa;
+    color: #333;
+    transform: rotateY(180deg);
+}
