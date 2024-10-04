@@ -6,6 +6,7 @@ import { defaultCardsList } from "./const";
 import { getRandomNum } from "./utils";
 import Button from "./components/Button/Button";
 import useTranslate from "./hooks/useTranslate";
+import SocialLink from "./components/SocialLink/SocialLink";
 
 interface CurrentCard {
   id: number
@@ -67,6 +68,10 @@ function App() {
         />
 
       </div>
+
+      <div className="socials">
+
+      </div>
       {
         currentCard && (
           <Card
@@ -75,7 +80,13 @@ function App() {
           />
         )
       }
+    <div style={{display: "flex", justifyContent: "center"}}>
 
+		<SocialLink 
+      redirectTo="https://www.linkedin.com/in/lucaasrojas/"
+      social="linkedin"
+      />
+      </div>
     </div>
   );
 }
